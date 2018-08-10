@@ -18,3 +18,5 @@ typing==3.6.4
 vine==1.1.4
 Werkzeug==0.14.1
 wtforms==2.2.1
+flask-restful==0.3.6
+flask-restplus==0.11.0

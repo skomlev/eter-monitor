@@ -21,6 +21,22 @@ class User(Base):
     email = db.Column(db.Unicode(128), nullable=False)
     password = db.Column(db.Unicode(128))
 
+    def __init__(self, user_data):
+        for k, v in user_data.items():
+            self.__setattr__(k, v)
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return '<User %r>' % self.name
+
+    def as_dict(self):
+        return {
+            c.name: getattr(self, c.name) for c in self.__table__.columns
+            if not (c.name == 'date_created')
+        }
+
 
 class Sensor(Base):
 
@@ -29,6 +45,22 @@ class Sensor(Base):
     name = db.Column(db.Unicode(30), nullable=False)
     variable = db.Column(db.Unicode(30), nullable=False)
     description = db.Column(db.Unicode(128))
+
+    def __init__(self, user_data):
+        for k, v in user_data.items():
+            self.__setattr__(k, v)
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return '<User %r>' % self.name
+
+    def as_dict(self):
+        return {
+            c.name: getattr(self, c.name) for c in self.__table__.columns
+            if not (c.name == 'date_created')
+        }
 
 
 class Measure(Base):
@@ -41,6 +73,22 @@ class Measure(Base):
     device = relationship('Device')
     value = db.Column(db.Unicode(10), nullable=False)
 
+    def __init__(self, user_data):
+        for k, v in user_data.items():
+            self.__setattr__(k, v)
+
+    def __str__(self):
+        return self.sensor
+
+    def __repr__(self):
+        return '<sensor %r>' % self.sensor
+
+    def as_dict(self):
+        return {
+            c.name: getattr(self, c.name) for c in self.__table__.columns
+            if not (c.name == 'date_created')
+        }
+
 
 class Device(Base):
 
@@ -50,3 +98,19 @@ class Device(Base):
     geolocation = db.Column(db.Unicode(128))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = relationship('User')
+
+    def __init__(self, user_data):
+        for k, v in user_data.items():
+            self.__setattr__(k, v)
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return '<User %r>' % self.name
+
+    def as_dict(self):
+        return {
+            c.name: getattr(self, c.name) for c in self.__table__.columns
+            if not (c.name == 'date_created')
+        }

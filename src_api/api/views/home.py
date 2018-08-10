@@ -1,9 +1,7 @@
-from flask import Blueprint
-from flask import current_app
-
-home = Blueprint('home', __name__)
+from flask_restful import Resource
 
 
-@home.route('/')
-def index():
-    return str("Measure ALIVE....")
+class HomeResource(Resource):
+
+    def get(self):
+        return str("Measure ALIVE....")

@@ -2,9 +2,9 @@ from celery import Celery
 from api.client import ClientMqtt
 from api.models import db, Measure, Device, Sensor
 import time
+from flask import current_app
 
-
-BACKEND = BROKER = 'redis://localhost:6379'
+BACKEND = BROKER = current_app.config['REDIS']
 
 
 celery = Celery(__name__, backend=BACKEND, broker=BROKER)
