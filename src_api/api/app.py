@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 from flask import Flask
 from api.views import blueprints
-from api.models import db, Measure
-import os
-
+from api.models import db
+# import os
 
 
 def create_app():
@@ -12,7 +11,8 @@ def create_app():
 
     app.config['MQTT_KEEPALIVE'] = 5
     app.config['MQTT_TLS_ENABLED'] = False
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+    # app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:////tmp/db_manager.db"
 
     for bp in blueprints:
         app.register_blueprint(bp)

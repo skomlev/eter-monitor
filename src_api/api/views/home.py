@@ -1,13 +1,8 @@
 from flask import Blueprint
-from api.background import create_client_mqtt
-
 
 home = Blueprint('home', __name__)
 
 
-@client.route('/')
+@home.route('/')
 def index():
-    return str("Measure ....")
-
-
-
+    return str("Measure ALIVE....")

@@ -27,14 +27,14 @@ def create_client_mqtt(broker_config):
 
 
 def on_connect(client, userdata, flags, rc):
-    print("Connected with result code "+ str(rc))
+    print("Connected with result code " + str(rc))
     client.subscribe(client._data_topic)
 
 
 def on_message(client, userdata, msg):
 
     client._state_msg = True
-    print(msg.topic + ' : '+ msg.payload.decode('utf-8'))
+    print(msg.topic + ' : ' + msg.payload.decode('utf-8'))
     time.sleep(1)
     client.process_msg(msg)
 
@@ -43,7 +43,7 @@ def client_mqtt(broker_config):
     topic_name = broker_config['topic']
     broker_name = broker_config['broker']
     port_name = broker_config['port']
-    #port_name = 1883
+    # port_name = 1883
     client = ClientMqtt()
     client.on_connect = on_connect
     client.on_message = on_message
@@ -63,14 +63,13 @@ def measure_db(data):
 def measure_save(data_mqtt):
     data = dict()
     if data_mqtt:
-
         q_device = db.session.query(Device).filter(
-                Device.geolocation == data_mqtt['geoloc']
-                ).first()
+            Device.geolocation == data_mqtt['geoloc']
+        ).first()
         q_sensor = db.session.query(Sensor).filter(
-                Sensor.name.like(data_mqtt['sensor']+'%'),
-                Sensor.variable.like(data_mqtt['variable']+'%')
-                ).first()
+            Sensor.name.like(data_mqtt['sensor'] + '%'),
+            Sensor.variable.like(data_mqtt['variable'] + '%')
+        ).first()
 
         data['id_device'] = q_device.id
         data['id_sensor'] = q_sensor.id

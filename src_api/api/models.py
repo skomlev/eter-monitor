@@ -1,6 +1,4 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.dialects.postgresql import JSON
-from sqlalchemy import  Column, Integer, JSON, DateTime
 from sqlalchemy.orm import relationship
 
 
@@ -12,8 +10,7 @@ class Base(db.Model):
     __abstract__ = True
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    date_created  = db.Column(db.DateTime,  default=db.func.current_timestamp())
-
+    date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
 
 
 class User(Base):
@@ -25,7 +22,6 @@ class User(Base):
     password = db.Column(db.Unicode(128))
 
 
-
 class Sensor(Base):
 
     __tablename__ = 'sensor'
@@ -33,7 +29,6 @@ class Sensor(Base):
     name = db.Column(db.Unicode(30), nullable=False)
     variable = db.Column(db.Unicode(30), nullable=False)
     description = db.Column(db.Unicode(128))
-
 
 
 class Measure(Base):
@@ -47,8 +42,6 @@ class Measure(Base):
     value = db.Column(db.Unicode(10), nullable=False)
 
 
-
-
 class Device(Base):
 
     __tablename__ = 'device'
@@ -57,5 +50,3 @@ class Device(Base):
     geolocation = db.Column(db.Unicode(128))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = relationship('User')
-
-

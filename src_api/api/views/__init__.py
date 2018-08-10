@@ -1,5 +1,6 @@
 from .client import client
-from .client import home
+from .home import home
 
 
 blueprints = [client, home]
+# blueprints = [client]
