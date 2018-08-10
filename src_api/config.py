@@ -1,43 +1,32 @@
 import os
 
-basedir = os.path.abspath(os.path.dirname(__file__))
 
+class BaseConfig(object):
+    """ Base configuration for all deploy contexts """
+    APP_DIR = os.path.abspath(os.path.dirname(__file__))
+    APP_HOST = "127.0.0.1"
+    APP_PORT = 5000
+    SECRET_KEY = "2622f44e-122e-4b14-b936-a7931f327e6f"
 
-class Config:
-    SECRET_KEY = os.environ.get('SECRET_KEY') or 'hard to guess string'
+    DEBUG = False
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
-    FLASKY_MAIL_SUBJECT_PREFIX = '[Flasky]'
-    FLASKY_MAIL_SENDER = 'Flasky Admin <flasky@example.com>'
-    FLASKY_ADMIN = os.environ.get('FLASKY_ADMIN')
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_DATABASE_URI = "sqlite:////tmp/security_manager.db"
+
+    STATIC_DIR = "/static"
+    TEMPLATE_DIR = "/templates"
+
+    MQTT_KEEPALIVE = 5
+    MQTT_TLS_ENABLED = False
+
+    REDIS = 'redis://localhost:6379'
 
 
-    @staticmethod
-    def init_app(app):
-        pass
-
-
-
-class DevelopmentConfig(Config):
+class DevelopmentConfig(BaseConfig):
+    # Development configuration
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL')
 
 
-
-class TestingConfig(Config):
-    TESTING = True
-    SQLALCHEMY_DATABASE_URI = os.environ.get('TEST_DATABASE_URL')
-
-
-
-
-
-class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
-
-
-config = {
-        'development': DevelopmentConfig,
-        'testing': TestingConfig,
-        'production': ProductionConfig,
-        'default': DevelopmentConfig
-        }
+class ProductionConfig(BaseConfig):
+    # Production configuration
+    DEBUG = False
