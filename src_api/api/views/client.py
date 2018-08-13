@@ -1,4 +1,5 @@
 from flask_restful import Resource, reqparse
+from flask import request
 from flask_restplus import inputs
 from api.modules.user import (
     create_user, get_user, create_divice, get_divice,
@@ -8,8 +9,8 @@ from api.modules.user import (
 
 class UserResource(Resource):
 
-    def get(self, email=None):
-        return get_user(email)
+    def get(self):
+        return get_user(request.args)
 
     def post(self):
         parser = reqparse.RequestParser(bundle_errors=True)
@@ -23,10 +24,11 @@ class UserResource(Resource):
         data = create_user(args)
         return data
 
+
 class DeviceResource(Resource):
 
-    def get(self, id=None):
-        return get_divice(id)
+    def get(self):
+        return get_divice(request.args)
 
     def post(self):
         parser = reqparse.RequestParser(bundle_errors=True)
@@ -45,8 +47,8 @@ class DeviceResource(Resource):
 
 class SensorResource(Resource):
 
-    def get(self, id=None):
-        return get_sensor(id)
+    def get(self):
+        return get_sensor(request.args)
 
     def post(self):
         parser = reqparse.RequestParser(bundle_errors=True)
